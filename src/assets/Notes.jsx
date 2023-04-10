@@ -7,17 +7,17 @@ import ContextApi from "../Context/createContext"
 
 const Notes = () => {
 
-  const { dataArr, setshowntoes,setafterupdate } = useContext(ContextApi)
+  const { afterupdate, dataArr, setshowntoes, setafterupdate } = useContext(ContextApi)
 
 
   const [startupdate, setstartupdate] = useState(false);
-  const [Key,setkey]=useState("")
+  const [Key, setkey] = useState("")
   const [input, setinput] = useState({
     title: "",
     description: ""
   })
   const [loading, setloading] = useState(false)
-  const [showupdate, setshowupdate]=useState(false)
+  const [showupdate, setshowupdate] = useState(false)
 
   function handleChange(e) {
 
@@ -35,6 +35,7 @@ const Notes = () => {
   const updateNote = (item) => {
     setstartupdate(true)
     setshowupdate(true)
+    setafterupdate(true)
     setkey(item._id)
     setinput(() => {
       return {
@@ -44,39 +45,39 @@ const Notes = () => {
     })
   }
   // ******
-  
+
   // *****
-const updateNote2= async(e)=>{
-  e.preventDefault();
-  setstartupdate(false)
-  setafterupdate(prev=>!prev)
-  setloading(true)
- try {
-  const {data}=await axios.put(`https://notes-app-7g2s.onrender.com/task/update/${Key}`,
-  {
-    title:input.title,
-    description:input.description
-  },
-  {
-    headers:{
-      "Content-Type": "application/json",
-    },
-    withCredentials:true
-  });
-  toast.success(data.message)
-  setinput({
-    title:"",
-    description:""
-  })
-  setloading(false)
-  
- } catch (error) {
-  toast.error("Fail to update")
- }
-}
+  const updateNote2 = async (e) => {
+    e.preventDefault();
+    setafterupdate(false)
+    setloading(true)
+    try {
+      const { data } = await axios.put(`https://notes-app-7g2s.onrender.com/task/update/${Key}`,
+        {
+          title: input.title,
+          description: input.description
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true
+        });
+      toast.success(data.message)
+      setinput({
+        title: "",
+        description: ""
+      })
+      setloading(false)
+
+    } catch (error) {
+      toast.error("Fail to update")
+    }
+  }
 
   async function addNote(e) {
     e.preventDefault();
+    setafterupdate(false)
     setloading(true)
     try {
       const { data } = await axios.post("https://notes-app-7g2s.onrender.com/task/add", {
@@ -134,14 +135,10 @@ const updateNote2= async(e)=>{
             onChange={handleChange}
             required
           />
-          
-          {startupdate === false ? <button disabled={loading} onClick={addNote}>
+          {afterupdate === false ? <button disabled={loading} onClick={addNote}>
             Add Note
-          </button>
-            :showupdate ?<button disabled={loading} onClick={updateNote2}>
-              Update Note
-            </button>:<button disabled={loading} onClick={addNote}>
-            Add Note
+          </button> : <button disabled={loading} onClick={updateNote2}>
+            Update Note
           </button>}
         </form>
       </main>

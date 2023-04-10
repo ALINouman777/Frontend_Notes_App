@@ -28,7 +28,7 @@ const ContextApi = ({ children }) => {
 
     fetchdata();
 
-  }, [shownotes,isAuth,afterupdate])
+  }, [shownotes,isAuth])
 
   return (
     <CreateContext.Provider value={{
@@ -38,7 +38,8 @@ const ContextApi = ({ children }) => {
       setisAuth,
       dataArr,
       setshowntoes,
-      setafterupdate
+      setafterupdate,
+      afterupdate
     }}>
       {children}
     </CreateContext.Provider>
