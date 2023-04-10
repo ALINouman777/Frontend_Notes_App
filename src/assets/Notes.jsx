@@ -7,7 +7,7 @@ import ContextApi from "../Context/createContext"
 
 const Notes = () => {
 
-  const { dataArr, setshowntoes } = useContext(ContextApi)
+  const { dataArr, setshowntoes,setafterupdate } = useContext(ContextApi)
 
 
   const [startupdate, setstartupdate] = useState(false);
@@ -48,6 +48,8 @@ const Notes = () => {
   // *****
 const updateNote2= async(e)=>{
   e.preventDefault();
+  setstartupdate(false)
+  setafterupdate(prev=>!prev)
   setloading(true)
  try {
   const {data}=await axios.put(`https://notes-app-7g2s.onrender.com/task/update/${Key}`,
@@ -132,12 +134,12 @@ const updateNote2= async(e)=>{
             onChange={handleChange}
             required
           />
-
+          
           {startupdate === false ? <button disabled={loading} onClick={addNote}>
             Add Note
           </button>
             :showupdate ?<button disabled={loading} onClick={updateNote2}>
-              update Note
+              Update Note
             </button>:<button disabled={loading} onClick={addNote}>
             Add Note
           </button>}

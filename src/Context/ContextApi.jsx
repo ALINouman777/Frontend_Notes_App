@@ -9,7 +9,8 @@ const ContextApi = ({ children }) => {
   const [isAuth, setisAuth] = useState(false);
   const [loading, setloading] = useState(false);
   const [dataArr, setdataArr]=useState([])
-  const [shownotes, setshowntoes]=useState(false)
+  const [shownotes, setshowntoes]=useState(false);
+  const [afterupdate, setafterupdate]=useState(false)
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -27,8 +28,7 @@ const ContextApi = ({ children }) => {
 
     fetchdata();
 
-  }, [shownotes,isAuth])
-
+  }, [shownotes,isAuth,afterupdate])
 
   return (
     <CreateContext.Provider value={{
@@ -37,7 +37,8 @@ const ContextApi = ({ children }) => {
       setloading,
       setisAuth,
       dataArr,
-      setshowntoes
+      setshowntoes,
+      setafterupdate
     }}>
       {children}
     </CreateContext.Provider>
