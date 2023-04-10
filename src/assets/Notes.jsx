@@ -49,8 +49,8 @@ const Notes = () => {
   // *****
   const updateNote2 = async (e) => {
     e.preventDefault();
-    setafterupdate(false)
-    setloading(true)
+    setafterupdate(false);
+    setloading(true);
     try {
       const { data } = await axios.put(`https://notes-app-7g2s.onrender.com/task/update/${Key}`,
         {
@@ -63,22 +63,22 @@ const Notes = () => {
           },
           withCredentials: true
         });
-      toast.success(data.message)
       setinput({
         title: "",
         description: ""
       })
       setloading(false)
 
+      toast.success(data.message);
     } catch (error) {
-      toast.error("Fail to update")
+      toast.error("Fail to update");
     }
   }
 
   async function addNote(e) {
     e.preventDefault();
-    setafterupdate(false)
-    setloading(true)
+    setafterupdate(false);
+    setloading(true);
     try {
       const { data } = await axios.post("https://notes-app-7g2s.onrender.com/task/add", {
         title: input.title,
@@ -106,7 +106,11 @@ const Notes = () => {
   };
 
   const elem = dataArr.map((item) => {
-    return <Notesitem key={item._id} item={item} updateNote={updateNote} setshowupdate={setshowupdate} setinput={setinput} />
+    return <Notesitem
+      key={item._id}
+      item={item} updateNote={updateNote}
+      setshowupdate={setshowupdate}
+      setinput={setinput} />
   })
 
 
@@ -142,7 +146,10 @@ const Notes = () => {
           </button>}
         </form>
       </main>
-      <br /> <br />  <hr />
+
+      <br />
+      <br />
+      <hr />
 
       <div className='flexdiv'>
         {elem}
